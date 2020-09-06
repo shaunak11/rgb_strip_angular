@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
   messages: Array<any>;
   color_rgb: string;
   socket: SocketIOClient.Socket;
+  temp: string;
 
   constructor() {
     this.socket = io.connect('http://192.168.0.130:8000');
@@ -28,6 +29,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.socket.on('temp', (data: any) => {
+      this.temp = data.msg;
+    });
+    console.log(this.temp);
     this.socket.on('event2', (data: any) => {
       this.rgb_obj = data.msg;
     });

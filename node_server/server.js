@@ -27,6 +27,16 @@ app.use(express.static(path.join(__dirname, "public")));
 
 io.on('connection', (socket) => {
 
+var temp = require("pi-temperature");
+temp.measure(function(err, temp) {
+    if (err) console.error(err);
+    else {
+	socket.emit('temp', {
+	    msg: temp
+	});
+    }
+});
+
 socket.emit('event2', {
   msg: rgb_state
 });
